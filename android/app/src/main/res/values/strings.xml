@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AirType AI</string>
+    <string name="ime_name">AirType AI — لوحة الكتابة في الهواء</string>
+    <string name="slogan">اكتب في الهواء، ودع كلماتك تظهر على الشاشة.</string>
+    <string name="subtype_arabic">العربية (الكتابة في الهواء)</string>
+    <string name="subtype_english">English (Air Typing)</string>
+    <string name="camera_permission_rationale">يحتاج كيبورد AirType AI إلى إذن الكاميرا لتتبع حركة أصابع اليد في الهواء محلياً على جهازك دون إرسال أي صورة إلى الإنترنت.</string>
+    <string name="enable_keyboard_step">تفعيل لوحة المفاتيح في إعدادات النظام</string>
+    <string name="select_keyboard_step">اختيار AirType AI كلوحة المفاتيح الافتراضية</string>
+    <string name="grant_camera_step">منح إذن الكاميرا لتتبع اليد</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0284C7</color>
+    <color name="primary_dark">#0369A1</color>
+    <color name="accent">#38BDF8</color>
+    <color name="bg_dark">#090D16</color>
+    <color name="surface_dark">#0F172A</color>
+    <color name="key_normal">#1E293B</color>
+    <color name="key_hover">#0EA5E9</color>
+    <color name="key_pressed">#22C55E</color>
+    <color name="danger">#EF4444</color>
+</resources>

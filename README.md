@@ -1,11 +1,84 @@
-<div align="center">
+# AirType AI — لوحة الكتابة في الهواء
+> **اكتب في الهواء، ودع كلماتك تظهر على الشاشة.**
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+AirType AI هو مشروع برمجي متكامل يتيح للمستخدمين كتابة النصوص والحروف في الهواء باستخدام حركة اليد والأصابع أمام الكاميرا، دون الحاجة إلى لمس لوحة المفاتيح المادية، مع إمكانية إدخال النصوص مباشرة في التطبيقات الأخرى (مثل المفكرة، المتصفح، محرر النصوص، وتطبيقات الهاتف).
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🌟 الميزات الرئيسية
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+- **تتبع اليد والأصابع في الوقت الفعلي**: تتبع طرف السبابة والإبهام ومعالم الكف باستخدام خوارزميات الرؤية الحاسوبية (MediaPipe).
+- **إدخال حقيقي على مستوى النظام (System-Level)**:
+  - على Windows: استخدام واجهة `SendInput` الأصلية بتقنية Unicode لحقن الحروف مباشرة في أي نافذة نشطة.
+  - على Android: خدمة `InputMethodService` نظامية حقيقية تتكامل مع `InputConnection`.
+- **دعم كامل للغتين العربية والإنجليزية**:
+  - تخطيط عربي قياسي كامل مع الأرقام وعلامات الترقيم.
+  - تخطيط إنجليزي QWERTY.
+  - دعم التبديل السريع وتوجيه النص (RTL/LTR).
+- **آلية صارمة لمنع تكرار الحروف**:
+  - فحص مدة ثبات الضم (`min_hold_ms`).
+  - قفل التكرار التلقائي (`WAIT_RELEASE`) الذي يشترط مباعدة الأصابع قبل قبول أي حرف جديد.
+- **إيماءات أمان وتحكم**:
+  - كف مفتوح (`PALM_PAUSED`) لإيقاف الكتابة مؤقتاً عند التحدث أو التحرك.
+  - زر إيقاف فوري أحمر واختصار لوحة مفاتيح (F12) لإلغاء الإدخال في أي ثانية.
+- **عمل محلي 100% دون إنترنت**: لا توجد أي خوادم سحابية أو تسجيل للصور؛ جميع العمليات تتم محلياً على جهاز المستخدم حفاظاً على الخصوصية.
+- **وضع بديل باللمس (Touch Fallback)**: إمكانية النقر باللمس في حال الرغبة أو انخفاض إضاءة الغرفة.
 
-</div>
+---
+
+## 📁 هيكلية المستودع (Repository Structure)
+
+```
+AirTypeAI/
+├── README.md                      # الوثيقة الرئيسية للمشروع
+├── shared/                         # المواصفات والتخطيطات المشتركة
+│   ├── gesture_spec.json          # مواصفات الإيماءات وزمن الثبات
+│   └── keyboard_layouts/
+│       ├── arabic.json            # تخطيط لوحة المفاتيح العربية
+│       └── english.json           # تخطيط لوحة المفاتيح الإنجليزية
+├── desktop/                        # تطبيق الكمبيوتر (Python / PySide6 / Windows)
+│   ├── requirements.txt           # اعتماديات بايثون
+│   ├── main.py                    # نقطة الدخول التنفيذية
+│   ├── camera/                    # إدارة الكاميرا وقراءة الإطارات
+│   ├── hand_tracking/             # معالجة معالم اليد بـ MediaPipe
+│   ├── gestures/                  # محرك الإيماءات وفلتر التنعيم
+│   ├── keyboard/                  # محرك مطابقة الحروف والتخطيطات
+│   ├── system_keyboard/           # محول إدخال Windows SendInput
+│   ├── ui/                        # واجهة PySide6 الرسومية
+│   └── tests/                     # اختبارات pytest الشاملة
+├── android/                        # تطبيق أندرويد (Kotlin / Compose / CameraX)
+│   ├── settings.gradle.kts
+│   ├── build.gradle.kts
+│   ├── app/
+│   │   ├── build.gradle.kts
+│   │   └── src/main/
+│   │       ├── AndroidManifest.xml # تسجيل خدمة لوحة المفاتيح
+│   │       ├── res/xml/method.xml # إعدادات subtypes
+│   │       └── java/com/airtype/ime/ # كود InputMethodService و CameraX
+│   └── test/                      # اختبارات JUnit
+└── docs/                           # الأدلة والمواصفات المعمارية
+    ├── ARCHITECTURE.md            # التصميم المعماري وتدفق الإشارات
+    ├── INSTALL_WINDOWS.md         # دليل التثبيت والتشغيل على ويندوز
+    ├── INSTALL_ANDROID.md         # دليل البناء والتثبيت على أندرويد
+    ├── TESTING.md                 # دليل تشغيل الاختبارات
+    └── LIMITATIONS.md             # القيود البرمجية وحدود النظام
+```
+
+---
+
+## 🚀 التشغيل السريع
+
+### 1. تشغيل نسخة الكمبيوتر (Windows):
+راجع [docs/INSTALL_WINDOWS.md](docs/INSTALL_WINDOWS.md)
+```bash
+cd desktop
+pip install -r requirements.txt
+python main.py
+```
+
+### 2. بناء وتثبيت نسخة أندرويد:
+راجع [docs/INSTALL_ANDROID.md](docs/INSTALL_ANDROID.md)
+```bash
+cd android
+./gradlew assembleDebug
+```

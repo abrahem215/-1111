@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "name": "AirType Gesture Specification",
+  "gestures": {
+    "POINTER_MOVE": {
+      "finger": "INDEX_FINGER_TIP",
+      "landmark_id": 8,
+      "description": "تحريك المؤشر الافتراضي بتتبع طرف السبابة",
+      "smoothing_filter": {
+        "type": "exponential_moving_average",
+        "alpha": 0.35,
+        "min_cutoff": 1.0,
+        "beta": 0.007
+      }
+    },
+    "KEY_SELECT_PINCH": {
+      "type": "PINCH",
+      "fingers": ["THUMB_TIP", "INDEX_FINGER_TIP"],
+      "landmarks": [4, 8],
+      "description": "ضم السبابة والإبهام لتأكيد الحرف المحدد",
+      "threshold_normalized_distance": 0.055,
+      "release_threshold": 0.085,
+      "min_hold_duration_ms": 120,
+      "repeat_cooldown_ms": 320,
+      "requires_release_before_next": true
+    },
+    "PALM_PAUSE": {
+      "type": "OPEN_PALM",
+      "description": "فتح الكف بالكامل وتوجيهه للأمام لإيقاف الإدخال مؤقتاً وحماية المستخدم من الكتابة غير المقصودة",
+      "all_fingers_extended": true,
+      "confidence_threshold": 0.85
+    },
+    "EMERGENCY_STOP": {
+      "type": "FIST_OR_BUTTON",
+      "description": "إيقاف فوري عبر قبض اليد بإحكام أو الضغط على زر F12 / الزر الأحمر",
+      "action": "HALT_TYPING_IMMEDIATELY"
+    }
+  },
+  "safety": {
+    "prevent_stuck_keys": true,
+    "require_explicit_arm": true,
+    "idle_timeout_seconds": 10,
+    "lost_hand_policy": "FREEZE_AND_DISARM"
+  }
+}
